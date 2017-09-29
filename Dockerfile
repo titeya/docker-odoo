@@ -19,23 +19,20 @@ RUN set -x; \
         && apt-get -y install -f --no-install-recommends \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb \
-        && pip install psycogreen==1.0
+        && pip install psycogreen==1.0 \
+        && pip install phonenumbers \
+        && pip install py-Asterisk
 
 # Install Odoo
 ENV ODOO_VERSION 10.0
 ENV ODOO_RELEASE 20170929
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
-        && echo '08d21e6419a72be7a3ad784df7a6fc8a46bbe7d9 odoo.deb' | sha1sum -c - \
+        && echo 'e45d534771be6f2dcb4d76213346b64bfb5a3130 odoo.deb' | sha1sum -c - \
         && dpkg --force-depends -i odoo.deb \
         && apt-get update \
         && apt-get -y install -f --no-install-recommends \
         && rm -rf /var/lib/apt/lists/* odoo.deb
-
-# Install asterisk python libs
-RUN set -x; \
-        pip install phonenumbers \
-        && pip install py-Asterisk
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
