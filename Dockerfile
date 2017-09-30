@@ -21,7 +21,8 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb \
         && pip install psycogreen==1.0 \
         && pip install phonenumbers \
-        && pip install py-Asterisk
+        && pip install py-Asterisk \
+        && pip install pysftp
 
 # Install Odoo
 ENV ODOO_VERSION 10.0
